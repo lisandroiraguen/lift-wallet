@@ -15,7 +15,7 @@
                             <v-tab>Transactions</v-tab>
                             <v-tab>Receive</v-tab>
                             <v-tab>Send</v-tab>
-
+                            <v-tab>token</v-tab>
                             <v-tab-item>
                                 <Loader v-if="transactions == null" />
                                 <v-row no-gutters v-if="transactions != null && transactions.length == 0">
@@ -151,6 +151,39 @@
                                     </v-form>
                                 </v-card>
                             </v-tab-item>
+
+                            <v-tab-item>
+                                <v-card>
+                                    <v-form>
+                                        <v-card-text>
+                                            <v-text-field
+                                                v-model="sendForm.address"
+                                                label="Address"
+                                                @change="getFee"
+                                                :error-messages="addressErrors"
+                                                required
+                                                @input="$v.address.$touch()"
+                                                @blur="$v.address.$touch()"
+                                                @focus="addressFocusIn"
+                                                :disabled="isSendingAda"
+                                                ></v-text-field>
+                                             <v-text-field
+                                                v-model="sendForm.tokenAmmount"
+                                                label="Token Amount"
+                                              
+                                                :error-messages="addressErrors"
+                                                required
+                                                @focus="addressFocusIn"
+                                                ></v-text-field>
+                                             
+                                          
+                                           
+
+                                          
+                                      </v-card-text>
+                                    </v-form>
+                                </v-card>
+                            </v-tab-item>
                         </v-tabs>
                     </v-sheet>
                 </v-card>
@@ -192,6 +225,7 @@
             feeFormatted: '0.000000',
             total: 0,
             totalFormatted: '0.000000',
+            tokenAmmount: '0.000000',
             passphrase: '',
             metadataFile: null,
             validAddress: true,
